@@ -1,4 +1,11 @@
 /*
+ * grunt-strip-nodes
+ * https://github.com/tango42/grunt-strip-nodes
+ * 
+ * Copyright (c) 2013 WillemHein Triemstra
+ * Licensed under the MIT license.
+ * based on:
+ * 
  * grunt-strip
  * https://github.com/joverson/grunt-strip
  *
@@ -15,38 +22,35 @@ module.exports = function(grunt) {
   grunt.registerMultiTask('strip', 'Strip console and iog logging messages', function() {
     var nodes = ['console'];
 
-    var options = this.options();
-
-    if (options.nodes) {
-      nodes = options.nodes instanceof Array  ? options.nodes : [options.nodes];
+    if (this.data.nodes) {
+      nodes = this.data.nodes instanceof Array  ? this.data.nodes : [this.data.nodes];
     }
-
-    this.files.forEach(function(fileObj){
-      if (!fileObj.dest) {
-        if (!options.inline) {
-          grunt.log.error('WARNING : POTENTIAL CODE LOSS.'.yellow);
-          grunt.log.error('You must specify "inline : true" when using the "files" configuration.');
-          grunt.log.errorlns(
-            'This WILL REWRITE FILES WITHOUT MAKING BACKUPS. Make sure your ' +
-              'code is checked in or you are configured to operate on a copied directory.'
-          );
-          return;
-        }
-        fileObj.src.forEach(function(file) {
-          stripSource(file,file,nodes);
-        });
-      } else {
-        var file = fileObj.src[0],
-          dest = fileObj.dest;
-        stripSource(file,dest,nodes);
+    grunt.log.write('nodes:'+nodes+'\n');
+    if (this.data.files) {
+      if (!this.data.inline) {
+        grunt.log.error('WARNING : POTENTIAL CODE LOSS.'.yellow);
+        grunt.log.error('You must specify "inline : true" when using the "files" configuration.');
+        grunt.log.errorlns(
+          'This WILL REWRITE FILES WITHOUT MAKING BACKUPS. Make sure your ' +
+            'code is checked in or you are configured to operate on a copied directory.'
+        );
+        return;
       }
-    });
+      var files = grunt.file.expand(this.data.files);
+      files.forEach(function(file) {
+        stripSource(file,file,nodes);
+      });
+    } else {
+      var file = this.data.src,
+        dest = this.data.dest;
+      stripSource(file,dest,nodes);
+    }
   });
 
   function stripSource(file,dest, nodes) {
     var src = grunt.file.read(file),
       output = stripNodes(src,nodes);
-
+      
     return grunt.file.write(dest,output);
   }
 

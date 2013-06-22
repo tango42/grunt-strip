@@ -1,28 +1,28 @@
 {
-  "name": "grunt-strip",
-  "description": "Remove JavaScript statements (like console.log) from your source code",
-  "version": "0.2.1",
-  "homepage": "https://github.com/jsoverson/grunt-strip",
+  "name": "grunt-strip-nodes",
+  "description": "Strip JavaScript nodes (like console.* or if(...) ) out of your source code",
+  "version": "0.1.2",
+  "homepage": "https://github.com/tango42/grunt-strip-nodes",
   "author": {
-    "name": "Jarrod Overson",
-    "email": "jsoverson@gmail.com",
-    "url": "http://jarrodoverson.com/"
+    "name": "WillemHein Triemstra",
+    "email": "willemhein@gmail.com",
+    "url": "http://www.codemans.nl/"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/jsoverson/grunt-strip.git"
+    "url": "git://github.com/tango42/grunt-strip-nodes.git"
   },
   "bugs": {
-    "url": "https://github.com/jsoverson/grunt-strip/issues"
+    "url": "https://github.com/tango42/grunt-strip-nodes.git/issues"
   },
   "licenses": [
     {
       "type": "MIT",
-      "url": "https://github.com/jsoverson/grunt-strip/blob/master/LICENSE-MIT"
+      "url": "https://github.com/tango42/grunt-strip-nodes/blob/master/LICENSE-MIT"
     }
   ],
   "main": "Gruntfile.js",
-  "bin": "bin/grunt-strip",
+  "bin": "bin/grunt-strip-nodes",
   "engines": {
     "node": ">= 0.6.0"
   },
@@ -33,7 +33,7 @@
     "falafel": "~0.1.3"
   },
   "devDependencies": {
-    "grunt": "~0.4.0",
+    "grunt": "~0.4.1",
     "grunt-contrib-nodeunit": "~0.1.2",
     "grunt-contrib-jshint": "~0.1.1",
     "grunt-contrib-copy": "~0.4.0",
@@ -42,6 +42,7 @@
   "keywords": [
     "gruntplugin",
     "strip",
+    "nodes",
     "console",
     "rewrite",
     "esprima",

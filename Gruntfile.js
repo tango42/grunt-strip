@@ -5,7 +5,8 @@ module.exports = function(grunt) {
   // Project configuration.
   grunt.initConfig({
     nodeunit: {
-      files: ['test/**/*test.js']
+      // files: ['test/**/*test.js']
+      files: ['test/strip_test.js']
     },
     clean : {
       tmp : ['tmp']
@@ -18,18 +19,39 @@ module.exports = function(grunt) {
       }
     },
     strip : {
-      options : {
-        nodes : ['iog', 'console.log']
-      },
       all_api_methods : {
+        nodes : [
+          'iog', 
+          'console.log',
+          { //esprima parser:
+              type:'IfStatement',
+              operator:'===',
+              leftType:'Identifier',
+              leftName:'rtlviewmode',
+              rightType:'Literal',
+              rightValue:'test',
+              replaceWith:'/* removed by strip */'
+          }          
+        ],
         src : 'test/fixtures/all_api_methods.js',
         dest : 'tmp/all_api_methods.js'
       },
-      inline : {
-        src : ['tmp/inline/*.js'],
-        options : {
-          inline : true
-        }
+      main : {
+          files : 'tmp/inline/*.js', 
+          inline : true, //overwrite!
+          nodes : [
+              'console',
+              // {type:'CallExpression',objectName:'console'},
+              { //esprima parser:
+                  type:'IfStatement',
+                  operator:'===',
+                  leftType:'Identifier',
+                  leftName:'rtlviewmode',
+                  rightType:'Literal',
+                  rightValue:'test',
+                  replaceWith:'/* removed by strip */'
+              }
+          ]
       }
     },
     jshint: {
@@ -49,6 +71,10 @@ module.exports = function(grunt) {
   grunt.loadTasks('tasks');
 
   // Default task.
-  grunt.registerTask('default', ['jshint','clean','copy','strip','nodeunit']);
+  grunt.registerTask('default', ['jshint','clean','copy','strip:all_api_methods','nodeunit']);
 
 };
+
+// npm link
+// npm adduser
+// npm publish
