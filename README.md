@@ -18,7 +18,7 @@ grunt.loadNpmTasks('grunt-strip-modules');
 
 ## Configuration
 
-### Configuration - strip all iog*, console.log* statements and all if-code-blocks starting with: "if (rtlviewmode==='test') {""
+#### Configuration - strip all iog*, console.log* statements and all if-code-blocks starting with: "if (rtlviewmode==='test') {""
 ```
 strip : {
   main : {
